@@ -55,7 +55,18 @@ class _MyVoc extends State<VocabGenerator> {
     return myNames;
   }
 
-  Widget _buildRow(String myNam) {
-    return ListTile(title: Text(myNam));
+  Widget _buildRow(String voc) {
+    final _markedFav = _hearted.contains(voc);
+    return ListTile(
+        title: Text(voc),
+        trailing: Icon(
+          _markedFav ? Icons.favorite : Icons.favorite_border,
+          color: _markedFav ? Colors.red : null,
+        ),
+        onTap: () {
+          setState(() {
+            _markedFav ? _hearted.remove(voc) : _hearted.add(voc);
+          });
+        });
   }
 }
