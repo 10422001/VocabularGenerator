@@ -55,18 +55,37 @@ class _MyVoc extends State<VocabGenerator> {
     return myNames;
   }
 
-  Widget _buildRow(String voc) {
-    final _markedFav = _hearted.contains(voc);
+  Widget _buildRow(String myVoc) {
+    final _markedFav = _hearted.contains(myVoc);
     return ListTile(
-        title: Text(voc),
-        trailing: Icon(
-          _markedFav ? Icons.favorite : Icons.favorite_border,
-          color: _markedFav ? Colors.red : null,
-        ),
-        onTap: () {
-          setState(() {
-            _markedFav ? _hearted.remove(voc) : _hearted.add(voc);
-          });
+      title: Text(myVoc),
+      trailing: Icon(
+        _markedFav ? Icons.favorite : Icons.favorite_border,
+        color: _markedFav ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          _markedFav ? _hearted.remove(myVoc) : _hearted.add(myVoc);
         });
+      },
+      onLongPress: () {
+        _pushExample(myVoc);
+      },
+    );
+  }
+
+  void _pushExample(String myVoc) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (BuildContext context) {
+        final _myVoc = myVoc;
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(_myVoc),
+            ),
+            body: Center(
+                child: Image.network(
+                    'https://library.vgu.edu.vn/wp-content/uploads/2021/04/VGU-Logo.png')));
+      }),
+    );
   }
 }
